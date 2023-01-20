@@ -1,3 +1,5 @@
+let BASE_URL = 'https://uptime-monitor-one.vercel.app';
+
 function createCookie({ name, value, days }) {
   var expires;
   if (days) {
