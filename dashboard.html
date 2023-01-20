@@ -8,8 +8,12 @@
     <script src="./script.js"></script>
     <link rel="stylesheet" href="styles.css" />
   </head>
+
   <body onload="getConfiguredURLS()">
-    <div>WELCOME satyajit</div>
+    <div style="margin: 20pt; padding: 20pt; background-color: aquamarine">
+      <div>WELCOME satyajit</div>
+      <button onclick="logout()">Logout</button>
+    </div>
     <div id="urls">
       <table id="urls-table">
         <th>urlId</th>
@@ -22,5 +26,14 @@
       </table>
     </div>
   </body>
-  <script src="./script.js"></script>
+  <script src="./script.js">
+    var table = document.querySelector('#urls-table');
+
+    // listen for a click
+    table.addEventListener('click', function (ev) {
+      // get the event targets ID
+      var serviceID = ev.target.id;
+      alert(serviceID);
+    })
+  </script>
 </html>

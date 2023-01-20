@@ -1,4 +1,6 @@
-let BASE_URL = 'https://uptime-monitor-one.vercel.app';
+const BASE_URL = 'https://uptime-monitor-one.vercel.app';
+const FRONTEND_BASE_URL = 'http://127.0.0.1:5501';
+// ('https://satyajitnayk.github.io/uptime-monitor-frontend');
 
 function createCookie({ name, value, days }) {
   var expires;
@@ -27,10 +29,15 @@ function getCookie(c_name) {
   return '';
 }
 
+function deleteCookie(name) {
+  document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
 async function getConfiguredURLS() {
   let response = await fetch(`${BASE_URL}/urls`, {
     headers: {
       Authorization: getCookie('accessToken'),
+      'Access-Control-Allow-Origin': '*',
     },
   });
   if (response.ok) {
@@ -39,6 +46,8 @@ async function getConfiguredURLS() {
     let table = document.getElementById('urls-table');
     response.data?.map((urldata) => {
       var row = table.insertRow(0);
+      row.id = urldata.urlId;
+      row.setAttribute('onclick', 'getUrlInfo(this)');
       var cell1 = row.insertCell(0);
       var cell2 = row.insertCell(1);
       var cell3 = row.insertCell(2);
@@ -57,4 +66,26 @@ async function getConfiguredURLS() {
   } else {
     alert('HTTP-Error: ' + response.status);
   }
+}
+
+const Redirect = (url) => {
+  window.location.replace(url);
+};
+
+async function logout() {
+  deleteCookie('accessToken');
+  Redirect(`${FRONTEND_BASE_URL}`);
+}
+
+ function getUrlInfo(row) {
+  console.log('urlInfo called with id', row.id);
+  Redirect(`${FRONTEND_BASE_URL}/url.html`);
+
+  // await delay(10000);
+}
+
+async function getUrlData()
+
+function delay(time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
 }

@@ -37,12 +37,6 @@
     </div>
 
     <script type="text/javascript">
-      const Redirect = () => {
-        window.location.replace(
-          'https://satyajitnayk.github.io/uptime-monitor-frontend/dashboard.html'
-        );
-      };
-
       async function register({ email, password }) {
         try {
           let response = await fetch(`${BASE_URL}/users/signup`, {
@@ -57,8 +51,10 @@
           if (response.ok) {
             // if HTTP-status is 200-299
             let json = await response.json();
+            console.log(json.message);
+            alert(json.message);
           } else {
-            alert('HTTP-Error: ' + response.status);
+            alert('unable to register');
           }
         } catch (error) {
           console.log(error);
@@ -86,29 +82,28 @@
             });
             alert('Login Success');
 
-            setTimeout('Redirect()', 2000);
+            Redirect(`${FRONTEND_BASE_URL}/dashboard.html`);
           } else {
-            alert('HTTP-Error: ' + response.status);
+            alert('HTTP-Error: ' + response);
           }
         } catch (error) {
           console.log(error);
         }
       }
 
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('user-password').value;
-
-      console.log(email, password);
-
       document
         .getElementById('register')
         .addEventListener('click', async function () {
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('user-password').value;
           await register({ email, password });
         });
 
       document
         .getElementById('login')
         .addEventListener('click', async function () {
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('user-password').value;
           await login({ email, password });
         });
     </script>
