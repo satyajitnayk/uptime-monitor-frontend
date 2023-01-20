@@ -80,6 +80,14 @@
               value: json.data.accessToken,
               days: 1,
             });
+            alert('Login Success');
+
+            const redirect = () => {
+              window.location.replace(
+                'https://satyajitnayk.github.io/uptime-monitor-frontend/'
+              );
+            };
+            setTimeout('redirect()', 2000);
           } else {
             alert('HTTP-Error: ' + response.status);
           }
