@@ -37,6 +37,11 @@
     </div>
 
     <script type="text/javascript">
+      const Redirect = () => {
+        window.location.replace(
+          'https://satyajitnayk.github.io/uptime-monitor-frontend/'
+        );
+      };
       const BASE_URL = 'https://uptime-monitor-one.vercel.app';
 
       async function register({ email, password }) {
@@ -82,12 +87,7 @@
             });
             alert('Login Success');
 
-            const redirect = () => {
-              window.location.replace(
-                'https://satyajitnayk.github.io/uptime-monitor-frontend/'
-              );
-            };
-            setTimeout('redirect()', 2000);
+            setTimeout('Redirect()', 2000);
           } else {
             alert('HTTP-Error: ' + response.status);
           }
