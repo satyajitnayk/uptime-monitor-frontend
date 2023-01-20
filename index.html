@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Signup</title>
+    <script type="text/javascript" src="./script.js"></script>
   </head>
   <body>
     <div
@@ -35,7 +36,7 @@
       </div>
     </div>
 
-    <script>
+    <script type="text/javascript">
       const BASE_URL = 'https://uptime-monitor-one.vercel.app';
 
       async function register({ email, password }) {
@@ -49,11 +50,17 @@
             },
           });
 
-          console.log(response);
-
-          if (response.status == 200) {
-            response = response.json();
-            console.log(response);
+          if (response.ok) {
+            // if HTTP-status is 200-299
+            // get the response body (the method explained below)
+            let json = await response.json();
+            createCookie({
+              name: 'accessToken',
+              value: json.data.accessToken,
+              days: 1,
+            });
+          } else {
+            alert('HTTP-Error: ' + response.status);
           }
         } catch (error) {
           console.log(error);
@@ -91,6 +98,12 @@
         .getElementById('register')
         .addEventListener('click', async function () {
           await register({ email, password });
+        });
+
+      document
+        .getElementById('login')
+        .addEventListener('click', async function () {
+          await login({ email, password });
         });
     </script>
   </body>
