@@ -24,3 +24,35 @@ function getCookie(c_name) {
   }
   return '';
 }
+
+async function getConfiguredURLS() {
+  let response = await fetch(`${BASE_URL}/urls`, {
+    headers: {
+      Authorization: getCookie('accessToken'),
+    },
+  });
+  if (response.ok) {
+    // if HTTP-status is 200-299
+    response = await response.json();
+    let table = document.getElementById('urls-table');
+    response.data?.map((urldata) => {
+      var row = table.insertRow(0);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
+      var cell4 = row.insertCell(3);
+      var cell5 = row.insertCell(4);
+      var cell6 = row.insertCell(5);
+      var cell7 = row.insertCell(6);
+      cell1.innerHTML = urldata.urlId;
+      cell2.innerHTML = urldata.url;
+      cell3.innerHTML = urldata.freqInMin;
+      cell4.innerHTML = urldata.retentionInDays;
+      cell5.innerHTML = urldata.lastRun;
+      cell6.innerHTML = urldata.createdAt;
+      cell7.innerHTML = urldata.updatedAt;
+    });
+  } else {
+    alert('HTTP-Error: ' + response.status);
+  }
+}
